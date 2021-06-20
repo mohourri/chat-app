@@ -99,7 +99,6 @@ $messageForm.addEventListener("submit", (e) => {
 });
 
 socket.on("roomData", ({ room, usersList }) => {
-  console.log(room + " " + usersList.length);
   const html = Mustache.render(sidebarTemplate, { room, usersList });
   document.querySelector("#sidebar").innerHTML = html;
 });

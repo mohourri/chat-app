@@ -70,9 +70,11 @@ io.on("connection", (socket) => {
     callback();
   });
 
-  socket.on("disconnect", (callback) => {
+  socket.on("disconnect", () => {
     const { user } = removeUser(socket.id);
-
+    if (!user) {
+      return null;
+    }
     io.to(user.room).emit(
       "serverMessage",
       generateserverMessage(`${user.username} has left !`)
@@ -81,7 +83,6 @@ io.on("connection", (socket) => {
       room: user.room,
       usersList: getRoomUsers(user.room),
     });
-    callback();
   });
 
   socket.on("sendLocation", ({ lat, long }, callback) => {
